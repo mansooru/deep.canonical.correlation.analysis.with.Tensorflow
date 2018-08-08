@@ -4,6 +4,7 @@ from linear_cca import linear_cca
 import numpy as np
 from neg_corr import neg_correlation
 from sklearn import svm
+from sklearn.metrics import accuracy_score
 
 # basic settings
 n_epochs = 100
