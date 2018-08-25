@@ -54,10 +54,11 @@ h22 = tf.layers.dropout(h22, 0.7, is_training)
 
 h32 = tf.contrib.layers.flatten(h22)
 h32 = tf.layers.dense(h32, 256, activation=tf.nn.relu, kernel_regularizer=tf.contrib.layers.l2_regularizer(scale=0.01))
-h42 = tf.layers.dense(h32, 10, kernel_regularizer=tf.contrib.layers.l2_regularizer(scale=0.01))
+h42 = tf.layers.dense(h32, 1, kernel_regularizer=tf.contrib.layers.l2_regularizer(scale=0.01))
 
 # Optimization
-cost = neg_correlation(h41,h42,10)
+#cost = neg_correlation(h41,h42,10)
+cost = tf.contrib.metrics.streaming_pearson_correlation(h41,h42)
 optimizer = tf.train.AdamOptimizer(0.001).minimize(cost)
 
 init = tf.global_variables_initializer()
