@@ -12,4 +12,4 @@ There are some challenges in this study
 
 Author: Mansu Kim, mansooru@skku.edu
 Data created: Aug-25-2018
-@ Sunggyunkwan University.
+@Sunggyunkwan University.
