@@ -5,16 +5,16 @@ n = 5000;
 p = 1024;
 q = 1024;
 
-max_zero = ceil(max(40, rand*200));
-max_block = ceil(max(20, rand*100));
+max_zero = 150;
+max_block =80;
 u0_gt = sb_vector(p,max_zero,max_block);
 
 if length(u0_gt) > p
     u0_gt(q+1:end)=[];
 end
 
-max_zero = ceil(max(40, rand*200));
-max_block = ceil(max(20, rand*100));
+max_zero = 150;
+max_block = 80;
 v0_gt = sb_vector(q,max_zero,max_block);
 
 if length(v0_gt) > q
@@ -37,9 +37,11 @@ label_X2 = v0_gt';
 
 input_X1 = zscore(input_X1);
 input_X2 = zscore(input_X2);
+H1 = get_connectivity(input_X1,2);
+H2 = get_connectivity(input_X2,2);
 
-save('train_X1_dataset.ver5.mat','input_X1','label_X1')
-save('train_X2_dataset.ver5.mat','input_X2','label_X2')
+save('train_X1_dataset.ver5.mat','input_X1','label_X1','H1')
+save('train_X2_dataset.ver5.mat','input_X2','label_X2','H2')
 
 clear input_X1 input_X2 label_X1 label_X2 i
 % Generate X and Y
@@ -56,6 +58,8 @@ input_X1 = zscore(input_X1);
 input_X2 = zscore(input_X2);
 save('test_X1_dataset.ver5.mat','input_X1','label_X1')
 save('test_X2_dataset.ver5.mat','input_X2','label_X2')
+
+
 
 
 
