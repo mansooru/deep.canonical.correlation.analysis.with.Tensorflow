@@ -13,11 +13,12 @@ batch_size = 200
 X1_data=h5py.File('./data/train_X1_dataset.ver5.mat')
 train_X1 = np.transpose(np.mat(X1_data['input_X1']))
 train_X1_label = np.transpose(np.mat(X1_data['label_X1']))
-
+H1 = np.mat(X1_data['H1'])
 
 X2_data=h5py.File('./data/train_X2_dataset.ver5.mat')
 train_X2 = np.transpose(np.mat(X2_data['input_X2']))
 train_X2_label = np.transpose(np.mat(X2_data['label_X2']))
+H2 = np.mat(X2_data['H2'])
 
 test_X1_data=h5py.File('./data/test_X1_dataset.ver5.mat')
 test_X1 = np.transpose(np.mat(test_X1_data['input_X1']))
@@ -42,7 +43,7 @@ W12 = tf.Variable(tf.random_uniform([1024, 1],-1,1))
 #L12 = tf.nn.relu(tf.matmul(X2,W12))
 model2 = tf.matmul(X2,W12)
 
-cost = neg_correlation(model1,model2,1) + 0.001*tf.norm(W11,ord=1) + 0.001*tf.norm(W12,ord=1)
+cost = neg_correlation(model1,model2,1) + 0.001*tf.norm(W11,ord=1) + 0.001*tf.norm(W12,ord=1) + tf.transpose(W12)*H1*W12
 #cost = tf.contrib.metrics.streaming_pearson_correlation(model1,model2)
 optimizer = tf.train.AdamOptimizer(0.01).minimize(cost)
 
