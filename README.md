@@ -1,4 +1,4 @@
-# Proj.title: deep-canonical-correlation-analysis-with-Tensorflow
+# deep-canonical-correlation-analysis-with-Tensorflow
 Developing deep learning based CCA algorithm with imaging genetics application
 # In this study aimed to discover novel genetic variants using DL based imaging genetics 
 Breifly, 
