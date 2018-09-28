@@ -24,14 +24,17 @@ train_X2_label = X2_data['label']
 X1 = tf.placeholder(tf.float32, [None,1024])
 X2 = tf.placeholder(tf.float32, [None,1024])
 
-W11 = tf.Variable(tf.random_uniform([1024, 2048],-1,1))
-L11 = tf.nn.relu(tf.matmul(X1,W11))
+W11 = tf.Variable(tf.random_normal([1, 3, 1, 16], stddev = 0.01))
+L11 = tf.nn.relu(tf.nn.conv1d(X1,W11,1,padding='SAME'))
 
-W21 = tf.Variable(tf.random_uniform([2048, 2048],-1,1))
-L21 = tf.nn.relu(tf.matmul(L11,W21))
+W21 = tf.Variable(tf.random_normal([1,3,16,32],stddev = 0.01))
+L21 = tf.nn.relu(tf.nn.conv1d(L11,W21,1,padding='SAME'))
 
-W31 = tf.Variable(tf.random_uniform([2048, 1024],-1,1))
-L31 = tf.nn.relu(tf.matmul(L21,W31))
+W31 = tf.Variable(tf.random_normal([1,3,32,64],stddev = 0.01))
+L31 = tf.nn.relu(tf.nn.conv1d(L21,W31,1,padding='SAME'))
+
+L41 = tf.contrib.layers.flatten(L31)
+L41 = tf.layers.dense(L41, 1024, activation=tf.nn.relu, kernel_regularizer=tf.contrib.layers.l2_regularizer(scale=0.01))
 
 W41 = tf.Variable(tf.random_uniform([1024, 1],-1,1))
 model1 = tf.matmul(X1,W41)
@@ -50,7 +53,7 @@ W42 = tf.Variable(tf.random_uniform([1024, 1],-1,1))
 model2 = tf.matmul(X2,W42)
 
 
-cost = neg_correlation(model1,model2,1) ++ 0.01*tf.norm(W41,ord=1) + 0.01*tf.norm(W42,ord=1)
+cost = neg_correlation(model1,model2,1) + 0.01*tf.norm(W41,ord=1) + 0.01*tf.norm(W42,ord=1)
 #+  0.01*tf.norm(W11,ord=2) + 0.1*tf.norm(W12,ord=2)+ 0.01*tf.norm(W21,ord=1) + 0.01*tf.norm(W22,ord=1) + 0.01 * tf.norm(W31,ord=1) + 0.01*tf.norm(W32,ord=1)
 #cost = tf.contrib.metrics.streaming_pearson_correlation(model1,model2)
 optimizer = tf.train.AdamOptimizer(0.01).minimize(cost)
