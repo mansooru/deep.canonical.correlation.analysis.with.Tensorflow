@@ -7,8 +7,12 @@ Breifly,
 
 There are some challenges in this study
 1) imaging genetics with CCA is unsupervised learning methology 
-2) Not enought samples were avaliable, need some idea to overcome
+2) Not enough samples were avaliable, need some idea to overcome
 3) No reference algorithm is avaliable
+
+updated Apr-29-2019
+1) Motivated by cycleGAN and deep feature selection, i developed circular feature selection network 
+2) Submitted in MICCAI 2019
 
 Author: Mansu Kim, mansooru@skku.edu
 Data created: Aug-25-2018
